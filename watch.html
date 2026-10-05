@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Watching Movie - CineVault</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="watch-page">
+
+  <!-- Dynamic Netflix Cinematic Backdrop & Gradient Overlays -->
+  <div class="watch-backdrop" id="watchBackdrop"></div>
+  <div class="watch-overlay"></div>
+
+  <!-- Netflix-Style Top Navigation Header -->
+  <header class="header watch-header">
+    <div class="container navbar">
+      <div class="nav-left">
+        <button class="nav-back-btn" onclick="history.back()" title="Go Back">
+          ← Back
+        </button>
+        <a href="index.html" class="brand-logo">🎬 CineVault</a>
+      </div>
+
+      <button class="mobile-toggle" aria-label="Toggle navigation">☰</button>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="movies.html" class="nav-link">Movies</a></li>
+        <li><a href="mylist.html" class="nav-link">My List</a></li>
+        <li><a href="profile.html" class="nav-link">Profile</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Auth actions auto-rendered by auth.js -->
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Watch Content Container -->
+  <main class="watch-main-content">
+    <div class="container watch-container">
+
+      <!-- Cinematic HTML5 Video Player -->
+      <div class="player-wrapper">
+        <video id="cineVaultVideo" class="video-player" controls controlsList="nodownload" playsinline autoplay>
+          Your browser does not support HTML5 video playback.
+        </video>
+      </div>
+
+      <!-- Netflix-Style Movie Information -->
+      <div class="watch-details">
+        <h1 id="watchTitle" class="watch-title">Loading Movie Title...</h1>
+        <div id="watchMeta" class="watch-meta">
+          <!-- Meta badges rendered by watch.js -->
+        </div>
+        <p id="watchDesc" class="watch-description">Loading movie synopsis...</p>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/watch.js"></script>
+</body>
+</html>
