@@ -1,0 +1,1846 @@
+
+/* ==========================================================================
+   🎬 CineVault - Master Cinematic Styling & Glassmorphism System
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;800;900&display=swap');
+
+:root {
+  --bg-main: #07080b;
+  --bg-card: rgba(18, 20, 29, 0.75);
+  --bg-card-hover: rgba(28, 31, 46, 0.85);
+  --bg-nav: rgba(10, 12, 18, 0.85);
+  --bg-glass: rgba(255, 255, 255, 0.03);
+
+  --accent-red: #ff0055;
+  --accent-red-glow: rgba(255, 0, 85, 0.4);
+
+  --accent-purple: #8b5cf6;
+  --accent-purple-glow: rgba(139, 92, 246, 0.4);
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+
+  --border-light: rgba(255, 255, 255, 0.08);
+  --border-active: rgba(255, 0, 85, 0.5);
+
+  --gradient-accent: linear-gradient(135deg, #ff0055 0%, #7c3aed 100%);
+  --gradient-dark: linear-gradient(180deg, rgba(7, 8, 11, 0) 0%, #07080b 100%);
+  --gradient-hero: linear-gradient(
+    90deg,
+    #07080b 0%,
+    rgba(7, 8, 11, 0.8) 50%,
+    rgba(7, 8, 11, 0.2) 100%
+  );
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --shadow-glow: 0 0 25px rgba(255, 0, 85, 0.25);
+  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+}
+
+
+/* ==========================================================================
+   Global Reset
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+
+/* ==========================================================================
+   Custom Scrollbar
+   ========================================================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e2235;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-red);
+}
+
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+
+/* ==========================================================================
+   Base Layout Container
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+
+/* ==========================================================================
+   Header & Navbar
+   ========================================================================== */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: var(--bg-nav);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-light);
+  transition: var(--transition-fast);
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 76px;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: var(--transition-fast);
+}
+
+.brand-logo:hover {
+  transform: scale(1.03);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  list-style: none;
+}
+
+.nav-link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: var(--transition-fast);
+  position: relative;
+  padding: 0.4rem 0;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--text-main);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--gradient-accent);
+  border-radius: 2px;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+
+/* ==========================================================================
+   Search
+   ========================================================================== */
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-light);
+  padding: 0.55rem 1rem 0.55rem 2.4rem;
+  border-radius: var(--radius-full);
+  color: var(--text-main);
+  font-size: 0.9rem;
+  width: 220px;
+  transition: var(--transition-smooth);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-red);
+  width: 280px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 15px rgba(255, 0, 85, 0.15);
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.8rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+
+/* ==========================================================================
+   User Badge & Profile
+   ========================================================================== */
+
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-light);
+  padding: 0.4rem 0.8rem 0.4rem 0.5rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.user-badge:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--gradient-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+.user-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+
+/* ==========================================================================
+   Mobile Toggle
+   ========================================================================== */
+
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-main);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.6rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  border: none;
+  outline: none;
+}
+
+.btn-primary {
+  background: var(--gradient-accent);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(255, 0, 85, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(255, 0, 85, 0.5);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border: 1px solid var(--border-light);
+  backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.btn-danger:hover {
+  background: #ef4444;
+  color: #fff;
+}
+
+.btn-sm {
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  border-radius: var(--radius-sm);
+}
+
+
+/* ==========================================================================
+   Hero Banner Section
+   ========================================================================== */
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 82vh;
+  min-height: 550px;
+  margin-top: 76px;
+  background-size: cover;
+  background-position: center top;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(
+      90deg,
+      #07080b 0%,
+      rgba(7, 8, 11, 0.85) 45%,
+      rgba(7, 8, 11, 0.2) 100%
+    ),
+    linear-gradient(
+      0deg,
+      #07080b 0%,
+      transparent 40%
+    );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 680px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 0, 85, 0.15);
+  border: 1px solid rgba(255, 0, 85, 0.4);
+  color: var(--accent-red);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 1.2rem;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 1.2rem;
+}
+
+.rating-tag {
+  color: #fbbf24;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: #cbd5e1;
+  margin-bottom: 2rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+
+/* ==========================================================================
+   Movie Grids & Cards
+   ========================================================================== */
+
+.section {
+  padding: 3.5rem 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 1.8rem;
+}
+
+.section-title {
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.section-link {
+  font-size: 0.9rem;
+  color: var(--accent-red);
+  font-weight: 600;
+  transition: var(--transition-fast);
+}
+
+.section-link:hover {
+  color: #fff;
+}
+
+
+/* Horizontal Scroll Grid */
+
+.movie-row {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 1.2rem;
+  scroll-behavior: smooth;
+}
+
+.movie-row::-webkit-scrollbar {
+  height: 6px;
+}
+
+
+/* Grid Layout */
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.8rem;
+}
+
+
+/* Movie Card Item */
+
+.movie-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 220px;
+}
+
+.movie-grid .movie-card {
+  width: 100%;
+}
+
+.movie-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--border-active);
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.9),
+    var(--shadow-glow);
+  z-index: 10;
+}
+
+.poster-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: #12141d;
+}
+
+.movie-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-smooth);
+}
+
+.movie-card:hover .movie-poster {
+  transform: scale(1.08);
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7, 8, 11, 0.2) 0%,
+      rgba(7, 8, 11, 0.95) 100%
+    );
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.2rem;
+  transition: var(--transition-fast);
+}
+
+.movie-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.overlay-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.movie-info {
+  padding: 1rem;
+}
+
+.movie-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.badge-genre {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  color: #cbd5e1;
+}
+
+
+/* Genre Pill Cards */
+
+.genre-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1.2rem;
+}
+
+.genre-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.4rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  backdrop-filter: blur(10px);
+}
+
+.genre-card:hover,
+.genre-card.active {
+  background: var(--gradient-accent);
+  border-color: transparent;
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+}
+
+
+/* ==========================================================================
+   Movie Details Page
+   ========================================================================== */
+
+.details-backdrop {
+  position: relative;
+  width: 100%;
+  min-height: 85vh;
+  margin-top: 76px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  padding: 4rem 0;
+}
+
+.details-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(
+      90deg,
+      #07080b 0%,
+      rgba(7, 8, 11, 0.92) 50%,
+      rgba(7, 8, 11, 0.7) 100%
+    ),
+    linear-gradient(
+      0deg,
+      #07080b 0%,
+      transparent 50%
+    );
+}
+
+.details-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  gap: 3.5rem;
+  align-items: flex-start;
+}
+
+.details-poster {
+  width: 320px;
+  flex-shrink: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(255, 0, 85, 0.2);
+  border: 1px solid var(--border-light);
+}
+
+.details-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.details-info {
+  flex: 1;
+}
+
+.details-title {
+  font-size: 3.2rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+
+.details-tags {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-light);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.tag-rating {
+  background: rgba(251, 191, 36, 0.15);
+  border-color: rgba(251, 191, 36, 0.3);
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.details-synopsis {
+  font-size: 1.1rem;
+  color: #cbd5e1;
+  line-height: 1.8;
+  margin-bottom: 2.2rem;
+  max-width: 800px;
+}
+
+
+/* ==========================================================================
+   Watch Page & Video Player (Netflix Cinematic Redesign)
+   ========================================================================== */
+
+body.watch-page {
+  position: relative;
+  min-height: 100vh;
+  background-color: #000000;
+  color: #ffffff;
+  overflow-x: hidden;
+  isolation: isolate;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Netflix-style Top Navigation Header Override */
+body.watch-page .header.watch-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 60%, transparent 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.3s ease;
+}
+
+body.watch-page .nav-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+body.watch-page .nav-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  padding: 0.45rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+body.watch-page .nav-back-btn:hover {
+  background: #e50914;
+  border-color: #e50914;
+  color: #ffffff;
+  transform: translateX(-3px);
+  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+}
+
+/* Fullscreen Dynamic Movie Backdrop */
+body.watch-page::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: var(--watch-poster);
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  filter: blur(28px) brightness(0.6);
+  transform: scale(1.1);
+  opacity: 0.4;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* Cinematic Multi-Gradient Dark Overlay */
+body.watch-page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.7) 45%,
+      #000000 100%
+    ),
+    radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Main Content Layout */
+.watch-main-content {
+  position: relative;
+  z-index: 1;
+  padding-top: 96px;
+  padding-bottom: 4rem;
+  min-height: calc(100vh - 96px);
+}
+
+.watch-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Professional Cinematic Video Player Wrapper */
+.player-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 78vh;
+  background: #000000;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.95),
+    0 0 30px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 0 auto 2.5rem auto;
+  transition: all 0.3s ease;
+}
+
+.player-wrapper:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 30px 60px -12px rgba(0, 0, 0, 1),
+    0 0 40px rgba(229, 9, 20, 0.15);
+}
+
+.video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  outline: none;
+  background: #000000;
+  display: block;
+}
+
+/* Minimal Netflix Movie Information Section */
+.watch-details {
+  max-width: 900px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+#watchTitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.8rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+#watchMeta,
+.details-tags {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+  color: #a3a3a3;
+  margin-bottom: 1.25rem;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+#watchMeta span,
+.details-tags span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+#watchMeta .rating-tag,
+.details-tags .rating-tag {
+  color: #fbbf24;
+  font-weight: 700;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+}
+
+#watchMeta .badge-genre,
+.details-tags .badge-genre {
+  background: rgba(229, 9, 20, 0.15);
+  color: #e50914;
+  font-weight: 700;
+  border: 1px solid rgba(229, 9, 20, 0.35);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+#watchDesc {
+  color: #d4d4d8;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  max-width: 850px;
+  font-weight: 400;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Watch Page Responsive Rules */
+@media (max-width: 992px) {
+  .watch-main-content {
+    padding-top: 86px;
+  }
+
+  #watchTitle {
+    font-size: 2rem;
+  }
+
+  .player-wrapper {
+    max-height: 65vh;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .watch-container {
+    padding: 0 1rem;
+  }
+
+  body.watch-page .nav-left {
+    gap: 0.8rem;
+  }
+
+  body.watch-page .nav-back-btn span {
+    display: inline;
+  }
+
+  #watchTitle {
+    font-size: 1.65rem;
+  }
+
+  #watchMeta,
+  .details-tags {
+    gap: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  #watchDesc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .player-wrapper {
+    aspect-ratio: 16 / 9;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .watch-main-content {
+    padding-top: 80px;
+  }
+
+  #watchTitle {
+    font-size: 1.4rem;
+  }
+
+  .player-wrapper {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    width: calc(100% + 2rem);
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+}
+
+
+/* ==========================================================================
+   Auth Pages (Login / Register)
+   ========================================================================== */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(139, 92, 246, 0.15) 0%,
+      rgba(7, 8, 11, 1) 70%
+    );
+
+  padding: 2rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+
+  background: rgba(18, 20, 29, 0.85);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+
+  padding: 2.5rem;
+
+  backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.8);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.form-group {
+  margin-bottom: 1.3rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #cbd5e1;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-light);
+
+  padding: 0.75rem 1rem;
+
+  border-radius: var(--radius-md);
+
+  color: var(--text-main);
+  font-size: 0.95rem;
+
+  transition: var(--transition-fast);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+
+  border-color: var(--accent-red);
+
+  background: rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    0 0 15px rgba(255, 0, 85, 0.2);
+}
+
+.form-select option {
+  background: #12141d;
+  color: var(--text-main);
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.auth-footer a {
+  color: var(--accent-red);
+  font-weight: 600;
+}
+
+
+/* ==========================================================================
+   Admin Dashboard
+   ========================================================================== */
+
+.admin-container {
+  margin-top: 76px;
+  padding: 2.5rem 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+
+  margin-bottom: 2.5rem;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+
+  padding: 1.5rem;
+
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  backdrop-filter: blur(12px);
+}
+
+.stat-icon {
+  width: 54px;
+  height: 54px;
+
+  border-radius: var(--radius-md);
+
+  background: rgba(255, 0, 85, 0.15);
+  color: var(--accent-red);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.6rem;
+}
+
+.stat-val {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.stat-lbl {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 1rem;
+
+  border-bottom: 1px solid var(--border-light);
+
+  margin-bottom: 2rem;
+}
+
+.admin-tab {
+  padding: 0.8rem 1.4rem;
+
+  font-weight: 600;
+  font-size: 0.95rem;
+
+  color: var(--text-muted);
+
+  border-bottom: 2px solid transparent;
+
+  cursor: pointer;
+
+  transition: var(--transition-fast);
+}
+
+.admin-tab.active {
+  color: var(--text-main);
+  border-color: var(--accent-red);
+}
+
+
+/* Table Styling */
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+
+  background: var(--bg-card);
+
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.admin-table th {
+  background: rgba(255, 255, 255, 0.03);
+
+  font-size: 0.85rem;
+  text-transform: uppercase;
+
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.table-thumb {
+  width: 46px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+
+/* File Upload Area */
+
+.upload-dropzone {
+  border: 2px dashed var(--border-light);
+  border-radius: var(--radius-md);
+
+  padding: 2rem;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  transition: var(--transition-fast);
+
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.upload-dropzone:hover {
+  border-color: var(--accent-red);
+  background: rgba(255, 0, 85, 0.04);
+}
+
+.upload-icon {
+  font-size: 2.2rem;
+  color: var(--accent-red);
+  margin-bottom: 0.6rem;
+}
+
+
+/* ==========================================================================
+   Modal
+   ========================================================================== */
+
+.modal-backdrop {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.8);
+
+  backdrop-filter: blur(10px);
+
+  z-index: 2000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: var(--transition-fast);
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: #12141d;
+
+  border: 1px solid var(--border-light);
+
+  border-radius: var(--radius-lg);
+
+  width: 90%;
+  max-width: 600px;
+
+  padding: 2rem;
+
+  max-height: 90vh;
+  overflow-y: auto;
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.9);
+}
+
+
+/* ==========================================================================
+   Toast Notification
+   ========================================================================== */
+
+.toast-container {
+  position: fixed;
+
+  bottom: 2rem;
+  right: 2rem;
+
+  z-index: 3000;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.toast {
+  background: rgba(18, 20, 29, 0.95);
+
+  border: 1px solid var(--border-light);
+  border-left: 4px solid var(--accent-red);
+
+  padding: 1rem 1.4rem;
+
+  border-radius: var(--radius-md);
+
+  color: var(--text-main);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.8);
+
+  backdrop-filter: blur(10px);
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+
+  animation:
+    slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+/* ==========================================================================
+   Empty State
+   ========================================================================== */
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-muted);
+}
+
+.empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+
+/* ==========================================================================
+   Responsive Rules
+   ========================================================================== */
+
+@media (max-width: 992px) {
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .details-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .details-poster {
+    width: 240px;
+  }
+
+  .details-tags {
+    justify-content: center;
+  }
+
+}
+
+
+@media (max-width: 768px) {
+
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: block;
+  }
+
+  .nav-links.active {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+
+    top: 76px;
+    left: 0;
+
+    width: 100%;
+
+    background: var(--bg-nav);
+
+    padding: 1.5rem;
+
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .search-input {
+    width: 160px;
+  }
+
+  .search-input:focus {
+    width: 200px;
+  }
+
+}
+
+
+/* ==========================================================================
+   Single Page Application (SPA) View Toggling
+   ========================================================================== */
+
+.view-section {
+  display: none !important;
+}
+
+.view-section.active {
+  display: block !important;
+}
+
+.view-section.active-flex {
+  display: flex !important;
+}
+
+
+/* ==========================================================================
+   🍿 NETFLIX-STYLE WATCH PAGE & VIDEO PLAYER STYLES
+   ========================================================================== */
+
+/* Body & Base Reset for Watch Page */
+body.watch-page {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Dynamic Cinematic Movie Backdrop Layer */
+.watch-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-image: var(--watch-poster, none);
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  filter: blur(28px) brightness(0.42) contrast(1.1);
+  transform: scale(1.1);
+  z-index: 0;
+  pointer-events: none;
+  transition: background-image 0.6s ease-in-out;
+}
+
+/* Multi-layer Black Gradient Overlay for High Readability */
+.watch-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.45) 35%, rgba(0, 0, 0, 0.9) 75%, #000000 100%),
+    radial-gradient(ellipse at center, rgba(0, 0, 0, 0.1) 0%, #000000 90%);
+}
+
+/* Top Navigation Header Override for Watch Page */
+.header.watch-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 65%, transparent 100%) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding: 0.6rem 0;
+  transition: background 0.3s ease;
+}
+
+.watch-header .navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Back Button styling */
+.nav-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 0.5rem 1.1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(6px);
+}
+
+.nav-back-btn:hover {
+  background: #e50914;
+  border-color: #e50914;
+  color: #ffffff;
+  transform: translateX(-3px);
+  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.45);
+}
+
+/* Main Content Container */
+.watch-main-content {
+  position: relative;
+  z-index: 2;
+  padding-top: 92px;
+  padding-bottom: 4rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.watch-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  width: 100%;
+}
+
+/* Large Cinematic Video Player Wrapper */
+.player-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #000000;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 2rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.player-wrapper:hover {
+  border-color: rgba(229, 9, 20, 0.35);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.98), 0 0 35px rgba(229, 9, 20, 0.18);
+}
+
+.video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #000000;
+  display: block;
+  outline: none;
+  border-radius: 10px;
+}
+
+/* Custom HTML5 Video Player Control styling hints */
+.video-player::-webkit-media-controls-panel {
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.85) 100%);
+}
+
+/* Netflix Movie Information Section */
+.watch-details {
+  max-width: 950px;
+  margin: 0;
+  animation: fadeInWatch 0.4s ease-out;
+}
+
+@keyframes fadeInWatch {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.watch-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  color: #ffffff !important;
+  margin: 0 0 0.8rem 0;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+/* Movie Metadata Badges & Spacing */
+.watch-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem 1.2rem;
+  margin-bottom: 1.2rem;
+  font-size: 0.95rem;
+  color: #e5e5e5;
+  font-weight: 500;
+}
+
+.watch-meta .meta-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #ffc107;
+  font-weight: 700;
+  background: rgba(255, 193, 7, 0.12);
+  padding: 0.25rem 0.65rem;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 193, 7, 0.25);
+}
+
+.watch-meta .badge-genre {
+  background: rgba(229, 9, 20, 0.18);
+  color: #ff4d4d;
+  border: 1px solid rgba(229, 9, 20, 0.4);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.watch-meta .meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #b3b3b3;
+}
+
+/* Movie Description */
+.watch-description {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #cccccc !important;
+  max-width: 850px;
+  font-weight: 400;
+  margin: 0;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Mobile & Tablet Responsive Adjustments */
+@media (max-width: 992px) {
+  .watch-main-content {
+    padding-top: 85px;
+  }
+  .player-wrapper {
+    margin-bottom: 1.8rem;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .watch-main-content {
+    padding-top: 76px;
+    padding-bottom: 3rem;
+  }
+  .watch-container {
+    padding: 0 1rem;
+  }
+  .player-wrapper {
+    border-radius: 8px;
+    margin-bottom: 1.4rem;
+  }
+  .watch-title {
+    font-size: 1.6rem;
+  }
+  .watch-meta {
+    gap: 0.6rem 0.85rem;
+    font-size: 0.85rem;
+  }
+  .watch-description {
+    font-size: 0.95rem;
+  }
+  .nav-left {
+    gap: 0.8rem;
+  }
+  .nav-back-btn {
+    padding: 0.38rem 0.8rem;
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .player-wrapper {
+    border-radius: 6px;
+    border: none;
+  }
+}
+
+
+
+
