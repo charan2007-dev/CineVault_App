@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movies Library - CineVault</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="header">
+    <div class="container navbar">
+      <a href="index.html" class="brand-logo">🎬 CineVault</a>
+      
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="movies.html" class="nav-link active">Movies</a></li>
+        <li><a href="movies.html?genre=Action" class="nav-link">Genres</a></li>
+        <li><a href="movies.html?sort=rating" class="nav-link">Trending</a></li>
+        <li><a href="movies.html?sort=rating" class="nav-link">Top Rated</a></li>
+        <li><a href="mylist.html" class="nav-link">My List</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Auth actions -->
+      </div>
+      <button class="mobile-toggle">☰</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container" style="margin-top: 110px; min-height: 80vh;">
+    
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+      <div>
+        <h1 id="pageTitle" style="font-size: 2.2rem;">Explore All Movies</h1>
+        <p id="movieCount" style="color: var(--text-muted); font-size: 0.9rem;">Showing available titles</p>
+      </div>
+
+      <!-- Filters Toolbar -->
+      <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <input type="text" id="catalogueSearchInput" class="search-input" style="width: 240px; padding-left: 1rem;" placeholder="Search title, genre, year..." />
+        
+        <select id="genreFilterSelect" class="form-select" style="width: 150px; padding: 0.55rem 0.8rem;">
+          <option value="">All Genres</option>
+          <option value="Action">Action</option>
+          <option value="Sci-Fi">Sci-Fi</option>
+          <option value="Thriller">Thriller</option>
+          <option value="Horror">Horror</option>
+          <option value="Drama">Drama</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Romance">Romance</option>
+          <option value="Fantasy">Fantasy</option>
+        </select>
+
+        <select id="sortBySelect" class="form-select" style="width: 150px; padding: 0.55rem 0.8rem;">
+          <option value="latest">Sort: Latest</option>
+          <option value="rating">Sort: Top Rated</option>
+          <option value="year">Sort: Release Year</option>
+          <option value="title">Sort: Title (A-Z)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Movie Grid -->
+    <div class="movie-grid" id="moviesGrid">
+      <!-- Dynamic Movies Grid -->
+    </div>
+
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/movies.js"></script>
+</body>
+</html>
