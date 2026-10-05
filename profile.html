@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile - CineVault</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="header">
+    <div class="container navbar">
+      <a href="index.html" class="brand-logo">🎬 CineVault</a>
+      
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="movies.html" class="nav-link">Movies</a></li>
+        <li><a href="mylist.html" class="nav-link">My List</a></li>
+      </ul>
+
+      <div class="nav-actions"></div>
+    </div>
+  </header>
+
+  <main class="container" style="margin-top: 110px; max-width: 900px; min-height: 80vh;">
+    
+    <!-- User Card -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 2.5rem; backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2.5rem;">
+      <div style="display: flex; align-items: center; gap: 1.5rem;">
+        <div id="profileAvatar" style="width: 72px; height: 72px; border-radius: 50%; background: var(--gradient-accent); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; color: #fff;">
+          U
+        </div>
+        <div>
+          <h2 id="profileUsername" style="font-size: 1.8rem; margin-bottom: 0.2rem;">Username</h2>
+          <p id="profileEmail" style="color: var(--text-muted); font-size: 0.95rem;">email@example.com</p>
+          <span id="profileRole" class="tag" style="margin-top: 0.5rem; display: inline-block;">Standard Member</span>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem;">
+        <div style="text-align: center; background: rgba(255,255,255,0.03); padding: 0.8rem 1.4rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+          <div id="profileListCount" style="font-size: 1.5rem; font-weight: 800; color: var(--accent-red);">0</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Saved Movies</div>
+        </div>
+        <button class="btn btn-danger" onclick="Api.logout()">Logout</button>
+      </div>
+    </div>
+
+    <!-- Recently Watched History -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 2rem;">
+      <h3 style="font-size: 1.3rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.6rem;">
+        🕒 Recently Watched
+      </h3>
+      
+      <div id="watchHistoryContainer">
+        <!-- Watch History items -->
+      </div>
+    </div>
+
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>
