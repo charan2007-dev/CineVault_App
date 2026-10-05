@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Details - CineVault</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="header">
+    <div class="container navbar">
+      <a href="index.html" class="brand-logo">🎬 CineVault</a>
+      
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="movies.html" class="nav-link">Movies</a></li>
+        <li><a href="mylist.html" class="nav-link">My List</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Dynamic header -->
+      </div>
+      <button class="mobile-toggle">☰</button>
+    </div>
+  </header>
+
+  <!-- Movie Details Backdrop Section -->
+  <section class="details-backdrop" id="detailsBackdrop">
+    <div class="details-overlay"></div>
+    <div class="container">
+      <div class="details-content" id="detailsContainer">
+        <!-- Rendered dynamically by details.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- More Like This Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">🎬 More Like This</h2>
+      </div>
+      <div class="movie-grid" id="moreLikeThisGrid">
+        <!-- Loaded dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/details.js"></script>
+</body>
+</html>
