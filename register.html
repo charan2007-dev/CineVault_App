@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - CineVault</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="auth-page">
+
+  <div class="auth-card">
+    <div class="auth-header">
+      <a href="index.html" class="brand-logo" style="font-size: 2.2rem; justify-content: center; margin-bottom: 0.8rem;">🎬 CineVault</a>
+      <h2 class="auth-title">Create Account</h2>
+      <p class="auth-subtitle">Join CineVault to unlock unlimited movie streaming</p>
+    </div>
+
+    <form id="registerForm">
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" id="regUsername" class="form-input" placeholder="Choose a username" required minlength="3" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" id="regEmail" class="form-input" placeholder="Enter your email" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" id="regPassword" class="form-input" placeholder="Create password (min 6 characters)" required minlength="6" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" id="regConfirmPassword" class="form-input" placeholder="Confirm password" required minlength="6" />
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem; margin-top: 0.5rem;">CREATE ACCOUNT</button>
+    </form>
+
+    <div class="auth-footer">
+      Already have an account? <a href="login.html">LOGIN HERE</a>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('regUsername').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+      if (password !== confirmPassword) {
+        Api.showToast('Passwords do not match!', 'error');
+        return;
+      }
+
+      try {
+        const res = await Api.register({ username, email, password });
+        Api.setToken(res.data.token);
+        Api.setUser(res.data);
+        Api.showToast('Account created successfully! Welcome to CineVault.', 'success');
+
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1000);
+      } catch (err) {
+        Api.showToast(err.message || 'Registration failed', 'error');
+      }
+    });
+  </script>
+</body>
+</html>
