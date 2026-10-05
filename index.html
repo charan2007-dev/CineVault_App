@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CineVault - Stream Modern Movies & Series</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Navigation Header (Common Across Views) -->
+  <header class="header">
+    <div class="container navbar">
+      <a href="#" onclick="showView('home'); return false;" class="brand-logo">🎬 CineVault</a>
+      
+      <ul class="nav-links" id="mainNavLinks">
+        <li><a href="#" data-nav="home" onclick="showView('home'); return false;" class="nav-link active">Home</a></li>
+        <li><a href="#" data-nav="movies" onclick="showView('movies'); return false;" class="nav-link">Movies</a></li>
+        <li><a href="#" data-nav="genres" onclick="showView('movies', { genre: 'Action' }); return false;" class="nav-link">Genres</a></li>
+        <li><a href="#" data-nav="trending" onclick="showView('movies', { sort: 'rating' }); return false;" class="nav-link">Trending</a></li>
+        <li><a href="#" data-nav="toprated" onclick="showView('movies', { sort: 'rating' }); return false;" class="nav-link">Top Rated</a></li>
+        <li><a href="#" data-nav="mylist" onclick="showView('mylist'); return false;" class="nav-link">My List</a></li>
+      </ul>
+
+      <div class="nav-actions" id="mainNavActions">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <button class="mobile-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Main Views Container -->
+  <main id="appContainer">
+
+    <!-- 1. HOME VIEW -->
+    <div id="viewHome" class="view-section active">
+      <!-- Hero Section -->
+      <section class="hero-section" id="heroSection">
+        <!-- Loaded dynamically by app.js -->
+      </section>
+
+      <!-- Trending Movies Section -->
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">🔥 Trending Movies</h2>
+            <a href="#" onclick="showView('movies', { sort: 'rating' }); return false;" class="section-link">View All →</a>
+          </div>
+          <div class="movie-row" id="trendingMovies">
+            <!-- Loaded dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Top Rated Section -->
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">⭐ Top Rated</h2>
+            <a href="#" onclick="showView('movies', { sort: 'rating' }); return false;" class="section-link">View All →</a>
+          </div>
+          <div class="movie-row" id="topRatedMovies">
+            <!-- Loaded dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Recently Added Section -->
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">🆕 Recently Added</h2>
+            <a href="#" onclick="showView('movies', { sort: 'latest' }); return false;" class="section-link">View All →</a>
+          </div>
+          <div class="movie-row" id="recentlyAddedMovies">
+            <!-- Loaded dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Browse by Genre Section -->
+      <section class="section" style="background: rgba(255,255,255,0.01); border-top: 1px solid var(--border-light);">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">🎭 Browse by Genre</h2>
+          </div>
+          <div class="genre-grid">
+            <div class="genre-card" onclick="showView('movies', { genre: 'Action' })">💥 Action</div>
+            <div class="genre-card" onclick="showView('movies', { genre: 'Sci-Fi' })">🚀 Sci-Fi</div>
+            <div class="genre-card" onclick="showView('movies', { genre: 'Thriller' })">⚡ Thriller</div>
+            <div class="genre-card" onclick="showView('movies', { genre: 'Horror' })">👻 Horror</div>
+            <div class="genre-card" onclick="showView('movies', { genre: 'Drama' })">🎭 Drama</div>
+            <div class="genre-card" onclick="showView('movies', { genre: 'Comedy' })">😂 Comedy</div>
+            <div class="genre-card" onclick="showView('movies', { genre: 'Romance' })">💖 Romance</div>
+            <div class="genre-card" onclick="showView('movies', { genre: 'Fantasy' })">🔮 Fantasy</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 2. MOVIES VIEW -->
+    <div id="viewMovies" class="view-section">
+      <div class="container" style="margin-top: 110px; min-height: 80vh;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+          <div>
+            <h1 id="pageTitle" style="font-size: 2.2rem;">Explore All Movies</h1>
+            <p id="movieCount" style="color: var(--text-muted); font-size: 0.9rem;">Showing available titles</p>
+          </div>
+
+          <!-- Filters Toolbar -->
+          <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <input type="text" id="catalogueSearchInput" class="search-input" style="width: 240px; padding-left: 1rem;" placeholder="Search title, genre, year..." />
+            
+            <select id="genreFilterSelect" class="form-select" style="width: 150px; padding: 0.55rem 0.8rem;">
+              <option value="">All Genres</option>
+              <option value="Action">Action</option>
+              <option value="Sci-Fi">Sci-Fi</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Horror">Horror</option>
+              <option value="Drama">Drama</option>
+              <option value="Comedy">Comedy</option>
+              <option value="Romance">Romance</option>
+              <option value="Fantasy">Fantasy</option>
+            </select>
+
+            <select id="sortBySelect" class="form-select" style="width: 150px; padding: 0.55rem 0.8rem;">
+              <option value="latest">Sort: Latest</option>
+              <option value="rating">Sort: Top Rated</option>
+              <option value="year">Sort: Release Year</option>
+              <option value="title">Sort: Title (A-Z)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Movie Grid -->
+        <div class="movie-grid" id="moviesGrid">
+          <!-- Dynamic Movies Grid -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. MOVIE DETAILS VIEW -->
+    <div id="viewDetails" class="view-section">
+      <!-- Movie Details Backdrop Section -->
+      <section class="details-backdrop" id="detailsBackdrop">
+        <div class="details-overlay"></div>
+        <div class="container">
+          <div class="details-content" id="detailsContainer">
+            <!-- Rendered dynamically by app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- More Like This Section -->
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">🎬 More Like This</h2>
+          </div>
+          <div class="movie-grid" id="moreLikeThisGrid">
+            <!-- Loaded dynamically -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 4. WATCH VIEW -->
+    <div id="viewWatch" class="view-section">
+      <div class="container watch-container">
+        <div style="margin-bottom: 1rem;">
+          <button class="btn btn-secondary btn-sm" onclick="showView('details', { id: currentMovieId }); return false;">← Back to Details</button>
+        </div>
+
+        <!-- HTML5 Video Player -->
+        <div class="player-wrapper">
+          <video id="cineVaultVideo" class="video-player" controls controlsList="nodownload" playsinline autoplay>
+            Your browser does not support HTML5 video playback.
+          </video>
+        </div>
+
+        <!-- Watch Movie Information -->
+        <div class="watch-meta">
+          <h1 id="watchTitle" style="font-size: 2rem; margin-bottom: 0.8rem;">Loading Movie Title...</h1>
+          <div id="watchMeta" class="details-tags" style="margin-bottom: 1.2rem;">
+            <!-- Meta badges -->
+          </div>
+          <p id="watchDesc" style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.7;">Loading movie synopsis...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. MY LIST VIEW -->
+    <div id="viewMylist" class="view-section">
+      <div class="container" style="margin-top: 110px; min-height: 80vh;">
+        <div style="margin-bottom: 2rem;">
+          <h1 style="font-size: 2.2rem;">My Watchlist</h1>
+          <p id="myListCount" style="color: var(--text-muted); font-size: 0.9rem;">Your saved movies</p>
+        </div>
+
+        <!-- Watchlist Grid -->
+        <div class="movie-grid" id="myListGrid">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. PROFILE VIEW -->
+    <div id="viewProfile" class="view-section">
+      <div class="container" style="margin-top: 110px; max-width: 900px; min-height: 80vh;">
+        <!-- User Card -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 2.5rem; backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2.5rem;">
+          <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <div id="profileAvatar" style="width: 72px; height: 72px; border-radius: 50%; background: var(--gradient-accent); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; color: #fff;">
+              U
+            </div>
+            <div>
+              <h2 id="profileUsername" style="font-size: 1.8rem; margin-bottom: 0.2rem;">Username</h2>
+              <p id="profileEmail" style="color: var(--text-muted); font-size: 0.95rem;">email@example.com</p>
+              <span id="profileRole" class="tag" style="margin-top: 0.5rem; display: inline-block;">Standard Member</span>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 1rem;">
+            <div style="text-align: center; background: rgba(255,255,255,0.03); padding: 0.8rem 1.4rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+              <div id="profileListCount" style="font-size: 1.5rem; font-weight: 800; color: var(--accent-red);">0</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Saved Movies</div>
+            </div>
+            <button class="btn btn-danger" onclick="Api.logout()">Logout</button>
+          </div>
+        </div>
+
+        <!-- Recently Watched History -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 2rem;">
+          <h3 style="font-size: 1.3rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.6rem;">
+            🕒 Recently Watched
+          </h3>
+          
+          <div id="watchHistoryContainer">
+            <!-- Watch History items -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. LOGIN VIEW -->
+    <div id="viewLogin" class="view-section auth-page">
+      <div class="auth-card">
+        <div class="auth-header">
+          <a href="#" onclick="showView('home'); return false;" class="brand-logo" style="font-size: 2.2rem; justify-content: center; margin-bottom: 0.8rem;">🎬 CineVault</a>
+          <h2 class="auth-title">Welcome Back</h2>
+          <p class="auth-subtitle">Log in to your account to stream premium movies</p>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label class="form-label">Username or Email</label>
+            <input type="text" id="usernameOrEmail" class="form-input" placeholder="Enter username or email" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="password" class="form-input" placeholder="Enter password" required />
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; font-size: 0.85rem;">
+            <label style="display: flex; align-items: center; gap: 0.4rem; color: var(--text-muted); cursor: pointer;">
+              <input type="checkbox" checked /> Remember Me
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">LOGIN</button>
+        </form>
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px dashed var(--border-light); padding: 0.8rem; border-radius: var(--radius-md); margin-top: 1.5rem; font-size: 0.8rem; text-align: center;">
+          <p style="color: var(--accent-red); font-weight:700; margin-bottom: 0.2rem;">⚡ Demo Quick Login Credentials:</p>
+          <p style="color: var(--text-muted);">Admin: <code style="color:#fff;">admin / admin123</code> | User: <code style="color:#fff;">user / user123</code></p>
+        </div>
+
+        <div class="auth-footer">
+          Don't have an account? <a href="#" onclick="showView('register'); return false;">CREATE ACCOUNT</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. REGISTER VIEW -->
+    <div id="viewRegister" class="view-section auth-page">
+      <div class="auth-card">
+        <div class="auth-header">
+          <a href="#" onclick="showView('home'); return false;" class="brand-logo" style="font-size: 2.2rem; justify-content: center; margin-bottom: 0.8rem;">🎬 CineVault</a>
+          <h2 class="auth-title">Create Account</h2>
+          <p class="auth-subtitle">Join CineVault to unlock unlimited movie streaming</p>
+        </div>
+
+        <form id="registerForm">
+          <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" id="regUsername" class="form-input" placeholder="Choose a username" required minlength="3" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="regEmail" class="form-input" placeholder="Enter your email" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="regPassword" class="form-input" placeholder="Create password (min 6 characters)" required minlength="6" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Confirm Password</label>
+            <input type="password" id="regConfirmPassword" class="form-input" placeholder="Confirm password" required minlength="6" />
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem; margin-top: 0.5rem;">CREATE ACCOUNT</button>
+        </form>
+
+        <div class="auth-footer">
+          Already have an account? <a href="#" onclick="showView('login'); return false;">LOGIN HERE</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. ADMIN VIEW -->
+    <div id="viewAdmin" class="view-section">
+      <div class="container admin-container">
+        <!-- Top Statistics Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">🎬</div>
+            <div>
+              <div class="stat-val" id="statTotalMovies">0</div>
+              <div class="stat-lbl">Total Movies</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div>
+              <div class="stat-val" id="statTotalUsers">0</div>
+              <div class="stat-lbl">Total Users</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">👁️</div>
+            <div>
+              <div class="stat-val" id="statTotalViews">0</div>
+              <div class="stat-lbl">Total Streams Watched</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Navigation Tabs -->
+        <div class="admin-tabs">
+          <div class="admin-tab active" data-tab="tabMovies">🎬 Manage Movies</div>
+          <div class="admin-tab" data-tab="tabAddMovie">➕ Add New Movie</div>
+          <div class="admin-tab" data-tab="tabUsers">👥 User Management</div>
+        </div>
+
+        <!-- TAB 1: MANAGE MOVIES TABLE -->
+        <div class="tab-content" id="tabMovies" style="display: block;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h3>Movie Library Management</h3>
+            <button class="btn btn-primary btn-sm" onclick="document.querySelector('[data-tab=\'tabAddMovie\']').click()">+ Add Movie</button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Poster</th>
+                  <th>Title</th>
+                  <th>Genre</th>
+                  <th>Year</th>
+                  <th>Rating</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminMoviesTableBody">
+                <!-- Dynamic rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 2: ADD / EDIT MOVIE FORM -->
+        <div class="tab-content" id="tabAddMovie" style="display: none;">
+          <div style="max-width: 800px; background: var(--bg-card); border: 1px solid var(--border-light); padding: 2.5rem; border-radius: var(--radius-lg); backdrop-filter: blur(20px);">
+            <h3 id="formTitle" style="font-size: 1.6rem; margin-bottom: 1.8rem;">➕ Add New Movie</h3>
+
+            <form id="addMovieForm" enctype="multipart/form-data">
+              
+              <div class="form-group">
+                <label class="form-label">Movie Title *</label>
+                <input type="text" id="movieTitleInput" name="title" class="form-input" placeholder="e.g. Cyber Horizon 2099" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Synopsis / Description *</label>
+                <textarea id="movieDescInput" name="description" class="form-textarea" rows="4" placeholder="Enter movie description..." required></textarea>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div class="form-group">
+                  <label class="form-label">Genre *</label>
+                  <select id="movieGenreInput" name="genre" class="form-select" required>
+                    <option value="Action">Action</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                    <option value="Thriller">Thriller</option>
+                    <option value="Horror">Horror</option>
+                    <option value="Drama">Drama</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Animation">Animation</option>
+                    <option value="Adventure">Adventure</option>
+                    <option value="Crime">Crime</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Language *</label>
+                  <input type="text" id="movieLanguageInput" name="language" class="form-input" placeholder="e.g. English, French, Japanese" required />
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
+                <div class="form-group">
+                  <label class="form-label">Release Year *</label>
+                  <input type="number" id="movieYearInput" name="releaseYear" class="form-input" placeholder="2026" min="1900" max="2035" required />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Duration *</label>
+                  <input type="text" id="movieDurationInput" name="duration" class="form-input" placeholder="e.g. 2h 15m" required />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">IMDb Rating *</label>
+                  <input type="number" step="0.1" id="movieRatingInput" name="rating" class="form-input" placeholder="e.g. 8.7" min="0" max="10" required />
+                </div>
+              </div>
+
+              <!-- Image & Video Links or File Uploads -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem;">
+                <div class="form-group">
+                  <label class="form-label">Poster Image URL (or upload file below)</label>
+                  <input type="text" id="moviePosterUrlInput" name="posterUrl" class="form-input" placeholder="https://images.unsplash.com/..." />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Video Stream URL (or upload file below)</label>
+                  <input type="text" id="movieVideoUrlInput" name="videoUrl" class="form-input" placeholder="https://commondatastorage.googleapis.com/..." />
+                </div>
+              </div>
+
+              <!-- File Uploads -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem;">
+                <div class="form-group">
+                  <label class="form-label">Movie Poster Image File (Upload)</label>
+                  <div class="upload-dropzone" id="posterDropzone">
+                    <div class="upload-icon">🖼️</div>
+                    <div id="posterFileLabel">Click or drag movie poster image here</div>
+                    <input type="file" id="posterFileInput" name="posterFile" accept="image/*" style="display:none;" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Movie Video File (Upload)</label>
+                  <div class="upload-dropzone" id="videoDropzone">
+                    <div class="upload-icon">🎞️</div>
+                    <div id="videoFileLabel">Click or drag movie video file (MP4/WebM) here</div>
+                    <input type="file" id="videoFileInput" name="videoFile" accept="video/*" style="display:none;" />
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 2rem;">
+                <button type="submit" id="submitMovieBtn" class="btn btn-primary" style="padding: 0.9rem 2.2rem; font-size: 1rem;">
+                  ADD MOVIE
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <!-- TAB 3: USER MANAGEMENT TABLE -->
+        <div class="tab-content" id="tabUsers" style="display: none;">
+          <h3 style="margin-bottom: 1.5rem;">Registered Users & Access Roles</h3>
+
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Joined Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="adminUsersTableBody">
+                <!-- Dynamic Users -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer (Visible on Public Pages) -->
+  <footer id="mainFooter" style="background: #040508; border-top: 1px solid var(--border-light); padding: 3rem 0; margin-top: 4rem; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+    <div class="container">
+      <p style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 800; color: #fff; margin-bottom: 0.8rem;">🎬 CineVault</p>
+      <p>© 2026 CineVault Streaming Platform. Premium Single-Page Cinematic Experience.</p>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
