@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - CineVault</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="auth-page">
+
+  <div class="auth-card">
+    <div class="auth-header">
+      <a href="index.html" class="brand-logo" style="font-size: 2.2rem; justify-content: center; margin-bottom: 0.8rem;">🎬 CineVault</a>
+      <h2 class="auth-title">Welcome Back</h2>
+      <p class="auth-subtitle">Log in to your account to stream premium movies</p>
+    </div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label class="form-label">Username or Email</label>
+        <input type="text" id="usernameOrEmail" class="form-input" placeholder="Enter username or email" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" id="password" class="form-input" placeholder="Enter password" required />
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; font-size: 0.85rem;">
+        <label style="display: flex; align-items: center; gap: 0.4rem; color: var(--text-muted); cursor: pointer;">
+          <input type="checkbox" checked /> Remember Me
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">LOGIN</button>
+    </form>
+
+    <div style="background: rgba(255,255,255,0.03); border: 1px dashed var(--border-light); padding: 0.8rem; border-radius: var(--radius-md); margin-top: 1.5rem; font-size: 0.8rem; text-align: center;">
+      <p style="color: var(--accent-red); font-weight:700; margin-bottom: 0.2rem;">⚡ Demo Quick Login Credentials:</p>
+      <p style="color: var(--text-muted);">Admin: <code style="color:#fff;">admin / admin123</code> | User: <code style="color:#fff;">user / user123</code></p>
+    </div>
+
+    <div class="auth-footer">
+      Don't have an account? <a href="register.html">CREATE ACCOUNT</a>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const usernameOrEmail = document.getElementById('usernameOrEmail').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        const res = await Api.login({ usernameOrEmail, password });
+        Api.setToken(res.data.token);
+        Api.setUser(res.data);
+        Api.showToast('Login Successful! Welcome back.', 'success');
+
+        setTimeout(() => {
+          if (res.data.role === 'ROLE_ADMIN' || res.data.role === 'ADMIN') {
+            window.location.href = '/admin.html';
+          } else {
+            window.location.href = '/';
+          }
+        }, 800);
+      } catch (err) {
+        Api.showToast(err.message || 'Invalid login credentials', 'error');
+      }
+    });
+  </script>
+</body>
+</html>
