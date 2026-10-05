@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - CineVault</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Admin Navigation Header -->
+  <header class="header">
+    <div class="container navbar">
+      <a href="admin.html" class="brand-logo">🎬 CineVault <span style="font-size: 0.75rem; background: var(--accent-red); color:#fff; padding: 0.15rem 0.5rem; border-radius: 4px; -webkit-text-fill-color: initial;">ADMIN</span></a>
+      
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">← User Website</a></li>
+        <li><a href="admin.html" class="nav-link active">Dashboard</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn btn-secondary btn-sm" onclick="Api.logout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Main Container -->
+  <main class="container admin-container">
+    
+    <!-- Top Statistics Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🎬</div>
+        <div>
+          <div class="stat-val" id="statTotalMovies">0</div>
+          <div class="stat-lbl">Total Movies</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div>
+          <div class="stat-val" id="statTotalUsers">0</div>
+          <div class="stat-lbl">Total Users</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">👁️</div>
+        <div>
+          <div class="stat-val" id="statTotalViews">0</div>
+          <div class="stat-lbl">Total Streams Watched</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Navigation Tabs -->
+    <div class="admin-tabs">
+      <div class="admin-tab active" data-tab="tabMovies">🎬 Manage Movies</div>
+      <div class="admin-tab" data-tab="tabAddMovie">➕ Add New Movie</div>
+      <div class="admin-tab" data-tab="tabUsers">👥 User Management</div>
+    </div>
+
+    <!-- TAB 1: MANAGE MOVIES TABLE -->
+    <div class="tab-content" id="tabMovies" style="display: block;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h3>Movie Library Management</h3>
+        <button class="btn btn-primary btn-sm" onclick="document.querySelector('[data-tab=\'tabAddMovie\']').click()">+ Add Movie</button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Poster</th>
+              <th>Title</th>
+              <th>Genre</th>
+              <th>Year</th>
+              <th>Rating</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adminMoviesTableBody">
+            <!-- Dynamic rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 2: ADD / EDIT MOVIE FORM -->
+    <div class="tab-content" id="tabAddMovie" style="display: none;">
+      <div style="max-width: 800px; background: var(--bg-card); border: 1px solid var(--border-light); padding: 2.5rem; border-radius: var(--radius-lg); backdrop-filter: blur(20px);">
+        <h3 id="formTitle" style="font-size: 1.6rem; margin-bottom: 1.8rem;">➕ Add New Movie</h3>
+
+        <form id="addMovieForm" enctype="multipart/form-data">
+          
+          <div class="form-group">
+            <label class="form-label">Movie Title *</label>
+            <input type="text" id="movieTitleInput" name="title" class="form-input" placeholder="e.g. Cyber Horizon 2099" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Synopsis / Description *</label>
+            <textarea id="movieDescInput" name="description" class="form-textarea" rows="4" placeholder="Enter movie description..." required></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="form-group">
+              <label class="form-label">Genre *</label>
+              <select id="movieGenreInput" name="genre" class="form-select" required>
+                <option value="Action">Action</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Horror">Horror</option>
+                <option value="Drama">Drama</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Romance">Romance</option>
+                <option value="Animation">Animation</option>
+                <option value="Adventure">Adventure</option>
+                <option value="Crime">Crime</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Language *</label>
+              <input type="text" id="movieLanguageInput" name="language" class="form-input" placeholder="e.g. English, French, Japanese" required />
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
+            <div class="form-group">
+              <label class="form-label">Release Year *</label>
+              <input type="number" id="movieYearInput" name="releaseYear" class="form-input" placeholder="2026" min="1900" max="2035" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Duration *</label>
+              <input type="text" id="movieDurationInput" name="duration" class="form-input" placeholder="e.g. 2h 15m" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">IMDb Rating *</label>
+              <input type="number" step="0.1" id="movieRatingInput" name="rating" class="form-input" placeholder="e.g. 8.7" min="0" max="10" required />
+            </div>
+          </div>
+
+          <!-- Image & Video Links or File Uploads -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Poster Image URL (or upload file below)</label>
+              <input type="text" id="moviePosterUrlInput" name="posterUrl" class="form-input" placeholder="https://images.unsplash.com/..." />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Video Stream URL (or upload file below)</label>
+              <input type="text" id="movieVideoUrlInput" name="videoUrl" class="form-input" placeholder="https://commondatastorage.googleapis.com/..." />
+            </div>
+          </div>
+
+          <!-- File Uploads -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Movie Poster Image File (Upload)</label>
+              <div class="upload-dropzone" id="posterDropzone">
+                <div class="upload-icon">🖼️</div>
+                <div id="posterFileLabel">Click or drag movie poster image here</div>
+                <input type="file" id="posterFileInput" name="posterFile" accept="image/*" style="display:none;" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Movie Video File (Upload)</label>
+              <div class="upload-dropzone" id="videoDropzone">
+                <div class="upload-icon">🎞️</div>
+                <div id="videoFileLabel">Click or drag movie video file (MP4/WebM) here</div>
+                <input type="file" id="videoFileInput" name="videoFile" accept="video/*" style="display:none;" />
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 2rem;">
+            <button type="submit" id="submitMovieBtn" class="btn btn-primary" style="padding: 0.9rem 2.2rem; font-size: 1rem;">
+              ADD MOVIE
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- TAB 3: USER MANAGEMENT TABLE -->
+    <div class="tab-content" id="tabUsers" style="display: none;">
+      <h3 style="margin-bottom: 1.5rem;">Registered Users & Access Roles</h3>
+
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Joined Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="adminUsersTableBody">
+            <!-- Dynamic Users -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
